@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Decryption</title>
+</head>
+<body>
+    <h1>Data Decryption</h1>
+    <form id="decrypt-form">
+        <label for="encrypted_data">Enter Encrypted Data:</label>
+        <textarea id="encrypted_data" name="encrypted_data" rows="4" cols="50"></textarea><br><br>
+        <button type="submit">Decrypt</button>
+    </form>
+    <div id="result">
+        <h2>Decrypted Data:</h2>
+        <pre id="decrypted-data"></pre>
+    </div>
+    <p><a href="/">Go to Detection Page</a></p>
+
+    <script>
+        document.getElementById('decrypt-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('/decrypt_data', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('decrypted-data').textContent = result.decrypted_data;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Leak Detection</title>
+</head>
+<body>
+    <h1>Data Leak Detection</h1>
+    <form id="detect-form">
+        <label for="data">Enter Data:</label>
+        <textarea id="data" name="data" rows="4" cols="50"></textarea><br><br>
+        <button type="submit">Detect</button>
+    </form>
+    <div id="result">
+        <h2>Result:</h2>
+        <pre id="detection-result"></pre>
+    </div>
+    <div id="encrypted-data">
+        <h2>Encrypted Data:</h2>
+        <pre id="encrypted-data-result"></pre>
+    </div>
+    <div id="compliance-check">
+        <h2>Compliance Check:</h2>
+        <pre id="compliance-check-result"></pre>
+    </div>
+    <div id="incident-response">
+        <h2>Incident Response:</h2>
+        <pre id="incident-response-result"></pre>
+    </div>
+    <p><a href="/decrypt">Go to Decryption Page</a></p>
+
+    <script>
+        document.getElementById('detect-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const response = await fetch('/detect', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('detection-result').textContent = result.result;
+            document.getElementById('encrypted-data-result').textContent = result.encrypted_data;
+            document.getElementById('compliance-check-result').textContent = result.compliance_check;
+            document.getElementById('incident-response-result').textContent = result.incident_response;
+        });
+    </script>
+</body>
+</html>
